@@ -29,8 +29,8 @@ db.define_table(
 db.define_table(
     'phone',
     Field('contact_id', 'reference contact'),
-    Field('phone_number', 'text'),
-    Field('phone_name', 'text'),
+    Field('phone_number'),
+    Field('phone_name'),
 )
 
 db.commit()

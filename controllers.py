@@ -87,8 +87,8 @@ def editphones(contact_id=None):
     assert contact_id is not None
     assert get_user_email() is not None
     #print("User:", get_user_email())
-    rows = db(db.contact.user_email == get_user_email()).select()
-    return dict(rows=rows, url_signer=url_signer)
+    rows = db(db.phone.contact_id == contact_id).select()
+    return dict(rows=rows, contact_id=contact_id, url_signer=url_signer)
 
 @action('add_phone/<contact_id:int>', method=["GET", "POST"])
 @action.uses(db, auth.user, session, 'add_phone.html')
@@ -96,7 +96,7 @@ def addphone(contact_id=None):
     assert contact_id is not None
     assert get_user_email() is not None
     #print("User:", get_user_email())
-    form = Form([Field('phone_number', 'text'), Field('phone_name', 'text')], csrf_session=session,
+    form = Form([Field('phone_number'), Field('phone_name')], csrf_session=session,
                 formstyle=FormStyleBulma)
     if form.accepted:
         db.phone.insert(
